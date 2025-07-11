@@ -1,0 +1,15 @@
+/* Centrar título */
+.uwu {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* Contenedor para organizar el formulario en dos columnas */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+

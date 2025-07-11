@@ -1,3 +1,4 @@
+import './Sidebar.css';
 import { Link } from "react-router-dom";
 import { 
   FaHome, 
@@ -12,7 +13,7 @@ import {
 const Sidebar = () => {
   return (
     <aside className="sidebar">
-      <h1>Raulito Market</h1>
+      <img src="src/components/logo.png" alt="Logo raulito market" className='logo' />
       <ul>
         <li>
           <Link to="/menu"><FaHome className="inline mr-2" /> Menú</Link>

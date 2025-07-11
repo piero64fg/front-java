@@ -1,3 +1,4 @@
+import './estilos/categorias.css';
 import { useEffect, useState } from "react";
 import { Button, Form, Modal, Table, InputGroup, FormControl } from "react-bootstrap";
 import {
@@ -87,9 +88,9 @@ const Categorias = () => {
 
   return (
     <div>
-      <h2 className="mb-4">Gestión de Categorías</h2>
+      <h2 className="mb-4 text-center">Gestión de Categorías</h2>
       <div className="d-flex justify-content-between mb-3">
-        <Button variant="primary" onClick={handleOpen}>
+        <Button className='bota'variant="primary" onClick={handleOpen}>
           Agregar Categoría
         </Button>
         <InputGroup style={{ maxWidth: "300px" }}>
@@ -104,7 +105,7 @@ const Categorias = () => {
         </InputGroup>
       </div>
 
-      <Table striped bordered hover className="mt-4">
+      <Table striped bordered hover responsive className="mt-4">
         <thead>
           <tr>
             <th>ID</th>

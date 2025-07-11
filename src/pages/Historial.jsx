@@ -53,7 +53,7 @@ const Historial = () => {
 
   return (
     <div>
-      <h2>Historial de Ventas</h2>
+      <h2 className="uwu">Historial de Ventas</h2>
 
       <InputGroup className="my-3" style={{ maxWidth: 300 }}>
         <Form.Control

@@ -1,3 +1,4 @@
+import './estilos/venta.css';
 import { useState, useEffect } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { crearVenta } from "../api/ventasService";
@@ -62,12 +63,12 @@ const Venta = () => {
 
   return (
     <div>
-      <h2>Realizar Venta</h2>
+      <h2 className='uwu'>Realizar Venta</h2>
 
       {cargando ? (
         <Spinner animation="border" />
       ) : (
-        <Form>
+        <Form className="form-grid">
           <Form.Group className="mb-3">
             <Form.Label>Cliente</Form.Label>
             <Form.Control

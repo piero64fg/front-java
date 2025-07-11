@@ -1,3 +1,4 @@
+import './Card.css';
 import { Link } from "react-router-dom";
 
 const Card = ({ title, description, image, route }) => {
@@ -7,7 +8,7 @@ const Card = ({ title, description, image, route }) => {
 
   return (
     <div className="card" onClick={handleClick}>
-      <img src={image} alt={title} />
+      <img src={image} alt={title} className='lola'/>
       <div className="card-content">
         <h2>{title}</h2>
         <p>{description}</p>

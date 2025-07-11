@@ -1,3 +1,4 @@
+import './estilos/producto.css';
 import { useEffect, useState } from "react";
 import { Button, Form, Modal, Table, InputGroup } from "react-bootstrap";
 import {
@@ -105,7 +106,7 @@ const Productos = () => {
       <h2 className="mb-4 text-center">Gestión de Productos</h2>
 
       <div className="d-flex justify-content-between mb-3">
-        <Button variant="primary" onClick={handleOpen}>
+        <Button className='bota' variant="primary" onClick={handleOpen}>
           Agregar Producto
         </Button>
         <InputGroup style={{ width: "300px" }}>

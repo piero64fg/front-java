@@ -1,0 +1,28 @@
+/* Sidebar.css */
+.sidebar a svg {
+  color: white !important;
+}
+
+.sidebar{
+    background-color: rgb(54, 54, 54) !important;
+}
+
+.logo{
+    display: block;
+    margin: 0 auto 2rem auto;
+    height: 80px;
+}
+
+.sidebar .section-title {
+  font-weight: bold;
+  font-size: 1.2rem ;
+  margin: 1rem 0 0.5rem 0;
+  text-transform: uppercase;
+  color: #c7c7c7;
+}
+
+
+.sidebar a:hover {
+  background-color: #6e6e6e !important;
+}
+

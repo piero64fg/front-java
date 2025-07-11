@@ -1,0 +1,20 @@
+
+
+.card-content {
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
+}
+
+.card-content h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold !important;
+}
+
+.card-content p {
+  color: #555;
+}
+.card-button {
+       
+  margin-bottom: 2rem !important;   
+}
