@@ -30,9 +30,6 @@ const Sidebar = () => {
         <li className="pl-14">
           <Link to="/historial"><FaHistory className="inline mr-2" /> Historial de ventas</Link>
         </li>
-        <li>
-          <Link to="/usuarios"><FaUsers className="inline mr-2" /> Usuarios</Link>
-        </li>
       </ul>
     </aside>
   );

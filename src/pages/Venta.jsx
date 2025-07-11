@@ -1,79 +1,132 @@
-// Venta.jsx
 import { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
-
-const productosDisponibles = [
-  { id: 1, nombre: "Hamburguesa", precio: 10 },
-  { id: 2, nombre: "Pizza", precio: 15 },
-  { id: 3, nombre: "Refresco", precio: 5 },
-];
+import { Button, Form, Spinner } from "react-bootstrap";
+import { crearVenta } from "../api/ventasService";
+import { getProductos } from "../api/productosService";
 
 const Venta = () => {
+  const [productosDisponibles, setProductosDisponibles] = useState([]);
   const [productoId, setProductoId] = useState("");
   const [cantidad, setCantidad] = useState(1);
+  const [cliente, setCliente] = useState("");
+  const [vendedor, setVendedor] = useState("");
+  const [comentario, setComentario] = useState("");
+  const [cargando, setCargando] = useState(true);
 
-  const productoSeleccionado = productosDisponibles.find((p) => p.id === parseInt(productoId));
-  const total = productoSeleccionado ? productoSeleccionado.precio * cantidad : 0;
+  useEffect(() => {
+    getProductos()
+      .then((data) => setProductosDisponibles(data))
+      .catch(console.error)
+      .finally(() => setCargando(false));
+  }, []);
+
+  const productoSeleccionado = productosDisponibles.find(
+    (p) => p.id === parseInt(productoId)
+  );
+  const total =
+    productoSeleccionado ? productoSeleccionado.precio * cantidad : 0;
 
   const handleRegistrarVenta = () => {
-    if (!productoId || cantidad <= 0) {
-      alert("Selecciona un producto y cantidad válida");
+    if (!productoId || cantidad <= 0 || !cliente || !vendedor) {
+      alert("Completa todos los campos requeridos");
       return;
     }
 
-    const nuevaVenta = {
-      id: Date.now(),
-      producto: productoSeleccionado.nombre,
-      precio: productoSeleccionado.precio,
-      cantidad,
-      total,
+    const venta = {
+      cliente: cliente.trim(),
+      vendedor: vendedor.trim(),
+      comentario: comentario.trim() || "-",
+      productos: [
+        {
+          producto_id: productoSeleccionado.id,
+          cantidad,
+          precio_unitario: productoSeleccionado.precio,
+        },
+      ],
     };
 
-    const ventasGuardadas = JSON.parse(localStorage.getItem("ventas")) || [];
-    localStorage.setItem("ventas", JSON.stringify([...ventasGuardadas, nuevaVenta]));
-
-    alert("Venta registrada correctamente");
-
-    // Reiniciar
-    setProductoId("");
-    setCantidad(1);
+    crearVenta(venta)
+      .then(() => {
+        alert("Venta registrada correctamente en el backend");
+        // Reiniciar
+        setProductoId("");
+        setCantidad(1);
+        setCliente("");
+        setVendedor("");
+        setComentario("");
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error al registrar venta");
+      });
   };
 
   return (
     <div>
       <h2>Realizar Venta</h2>
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Producto</Form.Label>
-          <Form.Select
-            value={productoId}
-            onChange={(e) => setProductoId(e.target.value)}
-          >
-            <option value="">Selecciona un producto</option>
-            {productosDisponibles.map((prod) => (
-              <option key={prod.id} value={prod.id}>
-                {prod.nombre} - S/ {prod.precio}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Cantidad</Form.Label>
-          <Form.Control
-            type="number"
-            min="1"
-            value={cantidad}
-            onChange={(e) => setCantidad(parseInt(e.target.value))}
-          />
-        </Form.Group>
+      {cargando ? (
+        <Spinner animation="border" />
+      ) : (
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Cliente</Form.Label>
+            <Form.Control
+              type="text"
+              value={cliente}
+              onChange={(e) => setCliente(e.target.value)}
+            />
+          </Form.Group>
 
-        <h5>Total: S/ {total.toFixed(2)}</h5>
+          <Form.Group className="mb-3">
+            <Form.Label>Vendedor</Form.Label>
+            <Form.Control
+              type="text"
+              value={vendedor}
+              onChange={(e) => setVendedor(e.target.value)}
+            />
+          </Form.Group>
 
-        <Button variant="success" onClick={handleRegistrarVenta}>
-          Registrar Venta
-        </Button>
-      </Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Comentario</Form.Label>
+            <Form.Control
+              type="text"
+              value={comentario}
+              onChange={(e) => setComentario(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Producto</Form.Label>
+            <Form.Select
+              value={productoId}
+              onChange={(e) => setProductoId(e.target.value)}
+            >
+              <option value="">Selecciona un producto</option>
+              {productosDisponibles.map((prod) => (
+                <option key={prod.id} value={prod.id}>
+                  {prod.nombre} - S/ {prod.precio}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Cantidad</Form.Label>
+            <Form.Control
+              type="number"
+              min="1"
+              value={cantidad}
+              onChange={(e) => setCantidad(parseInt(e.target.value))}
+            />
+          </Form.Group>
+
+          <h5>Total: S/ {total.toFixed(2)}</h5>
+
+          <Button variant="success" onClick={handleRegistrarVenta}>
+            Registrar Venta
+          </Button>
+        </Form>
+      )}
     </div>
   );
 };
